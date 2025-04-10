@@ -8,6 +8,15 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+
+puts "🌱 Resetting database..."
+
+Intake.destroy_all
+Supplement.destroy_all
+User.destroy_all
+
+puts "✅ All data cleared. Seeding fresh..."
+
 puts 'Creating user...'
 user = User.new(email_address: 'test@a.com', password: '890')
 if user.save
@@ -15,3 +24,29 @@ if user.save
 else
   puts 'Error creating user'
 end
+
+# First, create some supplements
+supplements = [
+  "Vitamin D3",
+  "Magnesium",
+  "Omega-3 Fish Oil",
+  "Creatine Monohydrate",
+  "Zinc"
+].map do |name|
+  Supplement.find_or_create_by!(name: name)
+end
+
+# Make sure there's at least one user to assign intakes to
+user = User.first
+unless user
+  puts "No users found. Please create a user first (e.g., via registration or manually in seeds)."
+  exit
+end
+
+# Create intakes for the user
+
+Supplement.all.each do |supplement|
+  Intake.create!(user: user, supplement: supplement)
+end
+
+puts "✅ Seeded #{supplements.count} supplements and 5 intakes for #{user.email_address}"
