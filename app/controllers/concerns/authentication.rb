@@ -53,7 +53,7 @@ private
   def authenticate
     begin
       if current_user
-        current_user
+        @current_user = current_user
       else
         render json: { error: "Unauthorized" }, status: :unauthorized
       end
