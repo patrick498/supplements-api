@@ -25,7 +25,7 @@ module Authentication
         aud: "supplements_client",
         sub: "User",
         jti: SecureRandom.uuid,
-        nbf: now + 1.second.to_i,
+        nbf: now + 1.second.to_i
       },
       Rails.application.credentials.jwt_secret,
       "HS256",
@@ -37,7 +37,7 @@ module Authentication
 
   def decode
     token = get_token
-    JWT.decode(token, Rails.application.credentials.jwt_secret, 'HS256')
+    JWT.decode(token, Rails.application.credentials.jwt_secret, "HS256")
   end
 
 private

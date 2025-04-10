@@ -47,4 +47,4 @@ group :development, :test do
 end
 
 # Custom Added
-gem 'jwt'
+gem "jwt"
