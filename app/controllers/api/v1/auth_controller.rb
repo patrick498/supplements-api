@@ -1,7 +1,7 @@
 module Api
   module V1
     class AuthController < ApplicationController
-      allow_unauthenticated_access only: [:login]
+      allow_unauthenticated_access only: [ :login ]
 
       def login
         @current_user = User.find_by(email_address: params[:email_address])
