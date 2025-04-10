@@ -52,11 +52,14 @@ private
 
   def authenticate
     begin
-      if current_user
-        @current_user = current_user
+      user_data = current_user
+
+      if user_data
+        @current_user = User.find_by(email_address: user_data["email_address"])
       else
         render json: { error: "Unauthorized" }, status: :unauthorized
       end
+
     rescue JWT::ExpiredSignature
       render json: { error: "Token has expired" }, status: :unauthorized
     end
